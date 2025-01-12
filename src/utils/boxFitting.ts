@@ -12,7 +12,7 @@ export function findOptimalBoxes(products: Product[]): {
 
   // Expand products based on quantity
   const expandedProducts = products.flatMap(product => 
-    Array(product.quantity).fill({ ...product, quantity: 1 })
+    Array(product.quantity).fill(null).map(() => ({ ...product, quantity: 1 }))
   )
 
   // Sort products by volume (largest first) to optimize packing
@@ -30,7 +30,6 @@ export function findOptimalBoxes(products: Product[]): {
 
   for (const product of sortedProducts) {
     let packed = false
-    const productVolume = product.length * product.width * product.height
 
     // Try to fit product in existing boxes first
     for (const packedBox of packedBoxes) {
